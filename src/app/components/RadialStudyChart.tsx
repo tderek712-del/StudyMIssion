@@ -1,44 +1,68 @@
-import { PolarGrid, RadialBar, RadialBarChart, ResponsiveContainer } from 'recharts';
+import { useState, useEffect, useRef } from 'react';
+import { PolarGrid, RadialBar, RadialBarChart, ResponsiveContainer, Cell } from 'recharts';
 
 const chartData = [
-  { technique: 'Spaced Repetition', score: 92, fill: '#c42916' },
+  { technique: 'Spaced Repetition', score: 92, fill: '#6b4a2f' },
   { technique: 'Active Recall',     score: 87, fill: '#1c1a15' },
-  { technique: 'Practice Testing',  score: 78, fill: '#6b6040' },
-  { technique: 'Elaboration',       score: 64, fill: '#9a8818' },
-  { technique: 'Re-reading',        score: 28, fill: '#c8c5be' },
+  { technique: 'Practice Testing',  score: 78, fill: '#8b5d32' },
+  { technique: 'Elaboration',       score: 64, fill: '#b08962' },
+  { technique: 'Re-reading',        score: 28, fill: '#c8bdaa' },
 ];
 
 const LEGEND = [
-  { label: 'Spaced Repetition', color: '#c42916' },
+  { label: 'Spaced Repetition', color: '#6b4a2f' },
   { label: 'Active Recall',     color: '#1c1a15' },
-  { label: 'Practice Testing',  color: '#6b6040' },
-  { label: 'Elaboration',       color: '#9a8818' },
-  { label: 'Re-reading',        color: '#c8c5be' },
+  { label: 'Practice Testing',  color: '#8b5d32' },
+  { label: 'Elaboration',       color: '#b08962' },
+  { label: 'Re-reading',        color: '#c8bdaa' },
 ];
 
 export function RadialStudyChart() {
+  const [animKey, setAnimKey] = useState(0);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAnimKey((key) => key + 1);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div style={{ width: '100%', maxWidth: 340 }}>
+    <div ref={wrapperRef} style={{ width: '100%', maxWidth: 340 }}>
       {/* Chart */}
       <div style={{ width: '100%', height: 220 }}>
         <ResponsiveContainer width="100%" height="100%">
           <RadialBarChart
+            key={animKey}
             data={chartData}
             innerRadius={28}
             outerRadius={102}
             startAngle={90}
             endAngle={-270}
           >
-            <PolarGrid gridType="circle" radialLines={false} stroke="rgba(28,26,21,0.08)" />
+            <PolarGrid gridType="circle" radialLines={false} stroke="rgba(28,26,21,0.12)" />
             <RadialBar
               dataKey="score"
-              background={{ fill: 'rgba(28,26,21,0.04)' }}
+              background={{ fill: 'rgba(28,26,21,0.06)' }}
               cornerRadius={4}
               isAnimationActive
-              animationBegin={200}
+              animationBegin={0}
               animationDuration={1400}
               animationEasing="ease-out"
             />
+              {chartData.map((entry) => (
+                <Cell key={entry.technique} fill={entry.fill} />
+              ))}
           </RadialBarChart>
         </ResponsiveContainer>
       </div>

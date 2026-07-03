@@ -88,7 +88,7 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
 
   return (
     // Tall outer div — provides the scroll range for all screen sizes
-    <div ref={outerRef} style={{ height: `${steps.length * 110}vh` }}>
+    <div id="sticky-section" data-steps={steps.length} ref={outerRef} style={{ height: `${steps.length * 110}vh` }}>
 
       {/* Sticky panel — locks to viewport top, adapts layout with breakpoints */}
       <div
@@ -112,23 +112,28 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
             <div
               key={i}
               style={{
-                position:       'absolute',
-                inset:          0,
-                display:        'flex',
-                flexDirection:  'column',
-                justifyContent: 'center',
-                // Mobile padding; desktop overridden via className
-                padding:        '1.5rem',
-                opacity:        active === i ? 1 : 0,
-                transform:      `translateY(${active === i ? 0 : active < i ? '22px' : '-22px'})`,
-                transition:     'opacity 0.55s ease, transform 0.55s ease',
-                pointerEvents:  active === i ? 'auto' : 'none',
+                position:      'absolute',
+                inset:         0,
+                display:       'flex',
+                flexDirection: 'column',
+                alignItems:    'stretch',
+                width:         '100%',
+                maxWidth:      '100%',
+                boxSizing:     'border-box',
+                // Keep top content visible on mobile, center on desktop.
+                padding:       '1.5rem',
+                paddingTop:    '3rem',
+                paddingBottom: '3rem',
+                opacity:       active === i ? 1 : 0,
+                transform:     `translateY(${active === i ? 0 : active < i ? '22px' : '-22px'})`,
+                transition:    'opacity 0.55s ease, transform 0.55s ease',
+                pointerEvents: active === i ? 'auto' : 'none',
               }}
-              className="md:!p-0 md:!pl-[5rem] md:!pr-[3rem]"
+              className="md:!p-0 md:!pl-[5rem] md:!pr-[3rem] md:flex md:flex-col md:justify-center"
             >
               <p style={tagStyle}>{step.tag}</p>
               <h2 style={headingStyle}>{step.heading}</h2>
-              <p style={{ ...bodyStyle, maxWidth: 380 }}>{step.body}</p>
+              <p style={{ ...bodyStyle, maxWidth: '100%' }}>{step.body}</p>
             </div>
           ))}
 

@@ -27,6 +27,9 @@ export type GlobeConfig = {
   initialPosition?: { lat: number; lng: number };
   autoRotate?: boolean;
   autoRotateSpeed?: number;
+  arcHeightMultiplier?: number;
+  arcStroke?: number;
+  ambientIntensity?: number;
 };
 
 export type Position = {
@@ -58,9 +61,12 @@ export function World({
 
     // ── renderer ──────────────────────────────────────────────────────────────
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Limit pixel ratio to improve initial load performance on high-DPI devices
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(W, H);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x061028, 0);
+    renderer.domElement.style.opacity = '0';
+    renderer.domElement.style.transition = 'opacity 0.25s ease';
     mount.appendChild(renderer.domElement);
 
     // ── scene & camera ────────────────────────────────────────────────────────
@@ -96,6 +102,9 @@ export function World({
 
     // ── globe ─────────────────────────────────────────────────────────────────
     const globe = new ThreeGlobe({ waitForGlobeReady: true, animateIn: true });
+    globe.onGlobeReady(() => {
+      renderer.domElement.style.opacity = '1';
+    });
 
     globe
       .showAtmosphere(globeConfig.showAtmosphere ?? true)
@@ -108,19 +117,24 @@ export function World({
       .then(geo => {
         globe
           .hexPolygonsData(geo.features)
-          .hexPolygonResolution(3)
-          .hexPolygonMargin(0.7)
-          .hexPolygonColor(() => globeConfig.polygonColor ?? 'rgba(255,255,255,0.7)');
+          // lower resolution for faster render while keeping dotted look
+          .hexPolygonResolution(2)
+          .hexPolygonMargin(0.6)
+          // force bright polygons for high contrast against the dark globe
+          .hexPolygonColor(() => globeConfig.polygonColor ?? '#ffffff');
       })
       .catch(() => { /* polygon layer optional */ });
 
-    // Material (needs a tick to be available after init)
+    // Material (needs a tick to be available after init) — increase contrast
     setTimeout(() => {
       const mat = globe.globeMaterial() as THREE.MeshPhongMaterial;
-      mat.color           = new THREE.Color(globeConfig.globeColor       ?? '#062056');
-      mat.emissive        = new THREE.Color(globeConfig.emissive         ?? '#062056');
-      mat.emissiveIntensity = globeConfig.emissiveIntensity ?? 0.1;
-      mat.shininess         = globeConfig.shininess         ?? 0.9;
+      // Strong dark base with low emissive so white polygons contrast sharply
+      mat.color = new THREE.Color(globeConfig.globeColor ?? '#061028');
+      mat.emissive = new THREE.Color(globeConfig.emissive ?? '#000000');
+      mat.emissiveIntensity = globeConfig.emissiveIntensity ?? 0.02;
+      mat.shininess = globeConfig.shininess ?? 0.9;
+      // Slightly increase specular-like appearance
+      (mat as any).specular = new THREE.Color('#111217');
     }, 0);
 
     // ── arcs ──────────────────────────────────────────────────────────────────
@@ -131,17 +145,18 @@ export function World({
       .arcEndLat((d: any)    => d.endLat)
       .arcEndLng((d: any)    => d.endLng)
       .arcColor((d: any)     => d.color)
-      .arcAltitude((d: any)  => d.arcAlt)
-      .arcStroke(() => 0.28)
-      .arcDashLength(globeConfig.arcLength      ?? 0.9)
+      // scale arc altitude to make arcs much higher above the globe
+      .arcAltitude((d: any)  => (d.arcAlt || 0.2) * (globeConfig.arcHeightMultiplier ?? 3))
+      .arcStroke(() => globeConfig.arcStroke ?? 0.9)
+      .arcDashLength(globeConfig.arcLength ?? 0.8)
       .arcDashInitialGap((d: any) => d.order)
-      .arcDashGap(15)
-      .arcDashAnimateTime(() => globeConfig.arcTime ?? 1000);
+      .arcDashGap(18)
+      .arcDashAnimateTime(() => globeConfig.arcTime ?? 900);
 
     scene.add(globe);
 
     // ── lighting ──────────────────────────────────────────────────────────────
-    scene.add(new THREE.AmbientLight(globeConfig.ambientLight ?? '#ffffff', 0.6));
+    scene.add(new THREE.AmbientLight(globeConfig.ambientLight ?? '#ffffff', globeConfig.ambientIntensity ?? 0.9));
 
     const dLeft = new THREE.DirectionalLight(globeConfig.directionalLeftLight ?? '#ffffff', 0.8);
     dLeft.position.set(-400, 100, 400);

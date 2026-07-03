@@ -50,9 +50,9 @@ export function ResearchSection() {
             marginBottom: '1.5rem',
           }}
         >
-          The Study Mission is building the optimal system for
-          students: a new layer between you and your academic
-          success.
+          The Study Mission collects research-backed practices and
+          presents them as approachable resources—guides, examples, and
+          exercises—that help students build dependable study habits.
         </p>
         <p
           style={{
@@ -62,8 +62,9 @@ export function ResearchSection() {
             color: '#1c1a15',
           }}
         >
-          It diagnoses. It adapts. It optimizes. It learns how
-          you study and guides your learning for you.
+          Our goal is to guide and support—helping learners adopt
+          effective techniques and reflect on their progress, not to
+          replace the student's own effort.
         </p>
       </div>
 

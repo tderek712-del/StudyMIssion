@@ -1,16 +1,6 @@
 import { useEffect, useState } from 'react';
 
 export function Navigation() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    // Set initial state in case page loads mid-scroll
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   const textColor = '#3a3830';
 
   return (
@@ -18,110 +8,78 @@ export function Navigation() {
       style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: '0 1.5rem',
-        height: '52px',
+        height: '64px',
         backgroundColor: '#dddbd3',
       }}
     >
-      {/* Left nav links */}
-      <div
-        className="hidden sm:flex items-center gap-6"
-        style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: '0.8125rem',
-          fontWeight: 400,
-          color: textColor,
-          minWidth: '160px',
-        }}
-      >
-        {['Blog', 'Students', 'Educators'].map((label) => (
-          <a
-            key={label}
-            href="#"
-            style={{ color: textColor, textDecoration: 'none', opacity: 0.75 }}
-          >
-            {label}
-          </a>
-        ))}
-      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        {/* Left small link */}
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.dispatchEvent(new Event('open-home'));
+          }}
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '0.875rem',
+            color: textColor,
+            textDecoration: 'none',
+            opacity: 0.85,
+            padding: '0.35rem 0.6rem',
+            cursor: 'pointer',
+          }}
+        >
+          Home
+        </a>
 
-      {/* Center: collapsible pill */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flex: 1,
-        }}
-      >
+        {/* Center pill */}
         <div
           style={{
             backgroundColor: '#1c1a15',
             borderRadius: '9999px',
             overflow: 'hidden',
             whiteSpace: 'nowrap',
-            // Collapse animation: max-width + padding transition creates the squeeze-in effect
-            maxWidth: scrolled ? '0px' : '260px',
-            opacity: scrolled ? 0 : 1,
-            paddingLeft: scrolled ? '0' : '1.1rem',
-            paddingRight: scrolled ? '0' : '1.1rem',
-            paddingTop: '0.35rem',
-            paddingBottom: '0.35rem',
-            transition:
-              'max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1), ' +
-              'opacity 0.3s ease, ' +
-              'padding-left 0.5s cubic-bezier(0.4, 0, 0.2, 1), ' +
-              'padding-right 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-            pointerEvents: scrolled ? 'none' : 'auto',
+            padding: '0.35rem 1.1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#e8e5de',
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 600,
+            letterSpacing: '0.01em',
+            fontSize: '0.9rem',
           }}
         >
-          <span
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: '0.8125rem',
-              fontWeight: 500,
-              color: '#e8e5de',
-              letterSpacing: '0.01em',
-              display: 'block',
-            }}
-          >
-            The Study Mission
-          </span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 8 }}>
+            <path d="M12 2a6 6 0 0 0-4 10c0 2 1 3 1.5 3.5V17a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1.5c.5-.5 1.5-1.5 1.5-3.5A6 6 0 0 0 12 2z" stroke="#e8e5de" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M9 18h6" stroke="#e8e5de" strokeWidth="1.4" strokeLinecap="round" />
+            <path d="M10 21h4" stroke="#e8e5de" strokeWidth="1.4" strokeLinecap="round" />
+          </svg>
+          <span style={{ display: 'inline-block' }}>The Study Mission</span>
         </div>
-      </div>
 
-      {/* Right: Sign in + Get started */}
-      <div
-        className="flex items-center gap-3"
-        style={{ minWidth: '160px', justifyContent: 'flex-end' }}
-      >
+        {/* Right small link */}
         <a
           href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.dispatchEvent(new Event('open-articles'));
+          }}
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: '0.8125rem',
+            fontSize: '0.875rem',
             color: textColor,
             textDecoration: 'none',
-            opacity: 0.75,
-          }}
-        >
-          Sign In
-        </a>
-        <button
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '0.8125rem',
-            fontWeight: 500,
-            backgroundColor: '#1c1a15',
-            color: '#e8e5de',
-            border: 'none',
-            borderRadius: '9999px',
-            padding: '0.35rem 1rem',
+            opacity: 0.85,
+            padding: '0.35rem 0.6rem',
             cursor: 'pointer',
           }}
         >
-          Get started
-        </button>
+          Articles
+        </a>
       </div>
     </nav>
   );

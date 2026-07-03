@@ -36,40 +36,26 @@ export function CtaSection() {
           maxWidth: '440px',
         }}
       >
-        Take a 30 minute session to see if The Study Mission
+        Take a quick read to see if The Study Mission
         is the missing layer in your learning.
       </p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         <button
+          onClick={() => window.dispatchEvent(new Event('open-articles'))}
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: '0.875rem',
             fontWeight: 500,
-            backgroundColor: 'transparent',
+            backgroundColor: '#1c1a15',
             color: '#e8e5de',
-            padding: '0.6rem 1.4rem',
+            padding: '0.8rem 1.6rem',
             borderRadius: '9999px',
-            border: '1px solid rgba(232,229,222,0.4)',
-            cursor: 'pointer',
-            letterSpacing: '0.01em',
-          }}
-        >
-          Get started
-        </button>
-        <button
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '0.875rem',
-            fontWeight: 400,
-            backgroundColor: 'transparent',
-            color: '#9a9488',
-            padding: '0.6rem 1.4rem',
             border: 'none',
             cursor: 'pointer',
             letterSpacing: '0.01em',
           }}
         >
-          Read the research
+          Read the Articles
         </button>
       </div>
     </section>

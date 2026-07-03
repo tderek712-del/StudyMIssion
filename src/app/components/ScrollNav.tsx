@@ -2,6 +2,28 @@ const sections = ['hero', 'research', 'faq', 'cta'];
 
 export function ScrollNav() {
   const scrollTo = (dir: 'up' | 'down') => {
+    // If the sticky scrollytelling section is in view, navigate its internal steps
+    const sticky = document.getElementById('sticky-section');
+    if (sticky) {
+      const rect = sticky.getBoundingClientRect();
+      const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+      if (inViewport) {
+        const steps = parseInt(sticky.getAttribute('data-steps') || '0', 10) || 0;
+        if (steps > 0) {
+          const stickyTop = window.scrollY + rect.top;
+          const outerHeight = rect.height;
+          const stepHeight = outerHeight / steps;
+          const rel = window.scrollY - stickyTop;
+          const idx = Math.max(0, Math.min(steps - 1, Math.round(rel / stepHeight)));
+          const next = dir === 'down' ? Math.min(idx + 1, steps - 1) : Math.max(idx - 1, 0);
+          const target = Math.round(stickyTop + next * stepHeight + 1);
+          window.scrollTo({ top: target, behavior: 'smooth' });
+          return;
+        }
+      }
+    }
+
+    // Fallback: move by viewport-sized sections
     const scrollY = window.scrollY;
     const vh = window.innerHeight;
     const idx = Math.round(scrollY / vh);
@@ -25,7 +47,6 @@ export function ScrollNav() {
       {[
         { label: '↓', action: () => scrollTo('down'), title: 'Next section' },
         { label: '↑', action: () => scrollTo('up'), title: 'Previous section' },
-        { label: '⌕', action: () => {}, title: 'Search' },
       ].map(({ label, action, title }) => (
         <button
           key={label}

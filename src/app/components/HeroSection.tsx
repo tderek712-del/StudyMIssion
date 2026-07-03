@@ -30,12 +30,12 @@ export function HeroSection() {
             marginBottom: '2.2rem',
           }}
         >
-          The Study Mission is the optimal system for students.
-          Continuously understanding, adapting, and improving
-          your approach to learning.
+          Take a quick read to see if The Study Mission is the
+          missing layer in your learning.
         </p>
         <div className="flex flex-wrap items-center gap-4">
           <button
+            onClick={() => window.dispatchEvent(new Event('open-articles'))}
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: '0.875rem',
@@ -49,35 +49,7 @@ export function HeroSection() {
               letterSpacing: '0.01em',
             }}
           >
-            Get started
-          </button>
-          <button
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: '0.875rem',
-              fontWeight: 400,
-              background: 'none',
-              border: 'none',
-              color: '#1c1a15',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              letterSpacing: '0.01em',
-              padding: '0.1rem 0',
-            }}
-          >
-            <span
-              style={{
-                display: 'inline-block',
-                width: '1rem',
-                height: '1rem',
-                border: '1px solid #1c1a15',
-                borderRadius: '2px',
-                flexShrink: 0,
-              }}
-            />
-            Explore the research
+            Read the Articles
           </button>
         </div>
       </div>

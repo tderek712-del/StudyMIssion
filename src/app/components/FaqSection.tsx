@@ -2,20 +2,20 @@ import { useState } from 'react';
 
 const faqs = [
   {
-    q: 'What makes some study techniques more effective than others?',
-    a: 'The gap between effective and ineffective studying comes down to how deeply you engage with material. Passive re-reading feels productive but barely moves the needle. Techniques like retrieval practice and spaced repetition force your brain to actively reconstruct knowledge — which is precisely what strengthens memory.',
+    q: 'What will I find in these articles?',
+    a: 'Each article explains the rationale behind better studying, what students should focus on, and how to apply the ideas in real learning scenarios. You get practical perspective, not just isolated tips.',
   },
   {
-    q: 'How long does spaced repetition actually take to show results?',
-    a: 'Most students notice a meaningful difference within two to three weeks. The compounding nature of spaced review means early sessions feel slow, but retention rates accelerate sharply after the first month of consistent practice.',
+    q: 'Who are these resources for?',
+    a: 'They are built for students who want to study smarter. Whether you are preparing for an exam, learning a subject deeply, or trying to build better habits, the articles help you make sense of your next study move.',
   },
   {
-    q: 'Is active recall better than highlighting and re-reading?',
-    a: 'By a wide margin. Multiple large-scale studies show active recall produces 50–80% better long-term retention than passive review. Highlighting has its place as a first-pass organiser, but it should never be the primary study method.',
+    q: 'How should I use the articles?',
+    a: 'Read one article, then try one change in your next study session. The point is to learn the concept, then make a small adjustment so the idea becomes part of your routine.',
   },
   {
-    q: 'Where should a student start if they want to improve?',
-    a: 'Start with one change: replace one re-reading session per week with a practice test or blank-page recall exercise. The improvement in retention is immediate and measurable — and it builds the habit without requiring a complete overhaul of your routine.',
+    q: 'What makes these articles different from regular study advice?',
+    a: 'They focus on the underlying learning process and what students actually gain from each choice. That means the guidance is more practical and lasting than quick tricks that fade after the next test.',
   },
 ];
 
@@ -42,7 +42,7 @@ export function FaqSection() {
               color: '#1c1a15',
             }}
           >
-            Questions worth asking
+            What the articles cover
           </h2>
         </div>
 
@@ -57,8 +57,7 @@ export function FaqSection() {
               marginBottom: '2.5rem',
             }}
           >
-            The questions students ask most often about building
-            more effective study habits.
+            Helpful answers about what the articles cover, how students can use them, and what support they offer for more effective study habits.
           </p>
 
           <div style={{ borderTop: '1px solid rgba(28,26,21,0.18)' }}>

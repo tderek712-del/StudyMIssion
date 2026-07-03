@@ -1,87 +1,84 @@
-// Adapted from globe-demo-1.tsx (Aceternity pattern) for Vite — no next/dynamic
+// Aceternity globe for the sticky scroll second card
 import { World } from './ui/globe';
-import type { Position, GlobeConfig } from './ui/globe';
+import type { GlobeConfig, Position } from './ui/globe';
 
-// ── colour palette matched to The Study Mission ───────────────────────────────
 const globeConfig: GlobeConfig = {
-  pointSize:            4,
-  globeColor:           '#1a1815',          // warm dark
-  showAtmosphere:       true,
-  atmosphereColor:      '#e8e5de',          // warm beige
-  atmosphereAltitude:   0.12,
-  emissive:             '#1c1a15',
-  emissiveIntensity:    0.12,
-  shininess:            0.9,
-  polygonColor:         'rgba(221,219,211,0.38)',
-  ambientLight:         '#e8e5de',
+  pointSize: 4,
+  globeColor: '#f5eee3',
+  showAtmosphere: true,
+  atmosphereColor: '#fbf7ef',
+  atmosphereAltitude: 0.12,
+  emissive: '#f0e9d9',
+  emissiveIntensity: 0.2,
+  shininess: 0.9,
+  polygonColor: 'rgba(255,255,255,0.85)',
+  ambientLight: '#ffffff',
   directionalLeftLight: '#ffffff',
-  directionalTopLight:  '#ffffff',
-  pointLight:           '#ffffff',
-  arcTime:              1200,
-  arcLength:            0.9,
-  rings:                1,
-  maxRings:             3,
-  initialPosition:      { lat: 22.3193, lng: 114.1694 },
-  autoRotate:           true,
-  autoRotateSpeed:      0.45,
+  directionalTopLight: '#f9f5ef',
+  pointLight: '#f5f1e7',
+  arcTime: 900,
+  arcLength: 0.8,
+  rings: 1,
+  maxRings: 3,
+  initialPosition: { lat: 15, lng: 10 },
+  autoRotate: true,
+  autoRotateSpeed: 1.2,
+  arcHeightMultiplier: 3.2,
+  arcStroke: 0.9,
+  ambientIntensity: 0.95,
 };
 
-// Arc colours from site palette: red, olive-gold, dark
-const colors: [string, string, string] = ['#c42916', '#9a8818', '#1c1a15'];
-const pick = () => colors[Math.floor(Math.random() * colors.length)];
-
 const sampleArcs: Position[] = [
-  { order:1,  startLat:-19.89, startLng:-43.95, endLat:-22.91, endLng:-43.17, arcAlt:0.1, color:pick() },
-  { order:1,  startLat:28.61,  startLng:77.21,  endLat:3.14,   endLng:101.69, arcAlt:0.2, color:pick() },
-  { order:1,  startLat:-19.89, startLng:-43.95, endLat:-1.30,  endLng:36.85,  arcAlt:0.5, color:pick() },
-  { order:2,  startLat:1.35,   startLng:103.82, endLat:35.68,  endLng:139.65, arcAlt:0.2, color:pick() },
-  { order:2,  startLat:51.51,  startLng:-0.13,  endLat:3.14,   endLng:101.69, arcAlt:0.3, color:pick() },
-  { order:2,  startLat:-15.79, startLng:-47.91, endLat:36.16,  endLng:-115.12,arcAlt:0.3, color:pick() },
-  { order:3,  startLat:-33.87, startLng:151.21, endLat:22.32,  endLng:114.17, arcAlt:0.3, color:pick() },
-  { order:3,  startLat:21.31,  startLng:-157.86,endLat:40.71,  endLng:-74.01, arcAlt:0.3, color:pick() },
-  { order:3,  startLat:-6.21,  startLng:106.85, endLat:51.51,  endLng:-0.13,  arcAlt:0.3, color:pick() },
-  { order:4,  startLat:11.99,  startLng:8.57,   endLat:-15.60, endLng:-56.06, arcAlt:0.5, color:pick() },
-  { order:4,  startLat:-34.60, startLng:-58.38, endLat:22.32,  endLng:114.17, arcAlt:0.7, color:pick() },
-  { order:4,  startLat:51.51,  startLng:-0.13,  endLat:48.86,  endLng:-2.35,  arcAlt:0.1, color:pick() },
-  { order:5,  startLat:14.60,  startLng:120.98, endLat:51.51,  endLng:-0.13,  arcAlt:0.3, color:pick() },
-  { order:5,  startLat:1.35,   startLng:103.82, endLat:-33.87, endLng:151.21, arcAlt:0.2, color:pick() },
-  { order:5,  startLat:34.05,  startLng:-118.24,endLat:48.86,  endLng:-2.35,  arcAlt:0.2, color:pick() },
-  { order:6,  startLat:37.57,  startLng:126.98, endLat:35.68,  endLng:139.65, arcAlt:0.1, color:pick() },
-  { order:6,  startLat:22.32,  startLng:114.17, endLat:51.51,  endLng:-0.13,  arcAlt:0.3, color:pick() },
-  { order:7,  startLat:48.86,  startLng:-2.35,  endLat:52.52,  endLng:13.41,  arcAlt:0.1, color:pick() },
-  { order:7,  startLat:52.52,  startLng:13.41,  endLat:34.05,  endLng:-118.24,arcAlt:0.2, color:pick() },
-  { order:8,  startLat:49.28,  startLng:-123.12,endLat:52.37,  endLng:4.90,   arcAlt:0.2, color:pick() },
-  { order:8,  startLat:1.35,   startLng:103.82, endLat:40.71,  endLng:-74.01, arcAlt:0.5, color:pick() },
-  { order:9,  startLat:51.51,  startLng:-0.13,  endLat:34.05,  endLng:-118.24,arcAlt:0.2, color:pick() },
-  { order:9,  startLat:22.32,  startLng:114.17, endLat:-22.91, endLng:-43.17, arcAlt:0.7, color:pick() },
-  { order:10, startLat:-22.91, startLng:-43.17, endLat:28.61,  endLng:77.21,  arcAlt:0.7, color:pick() },
-  { order:10, startLat:34.05,  startLng:-118.24,endLat:31.23,  endLng:121.47, arcAlt:0.3, color:pick() },
+  { order: 1, startLat: -19.885592, startLng: -43.951191, endLat: -22.9068, endLng: -43.1729, arcAlt: 0.1, color: '#1c1a15' },
+  { order: 1, startLat: 28.6139, startLng: 77.209, endLat: 3.139, endLng: 101.6869, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 1, startLat: -19.885592, startLng: -43.951191, endLat: -1.303396, endLng: 36.852443, arcAlt: 0.5, color: '#1c1a15' },
+  { order: 2, startLat: 1.3521, startLng: 103.8198, endLat: 35.6762, endLng: 139.6503, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 2, startLat: 51.5072, startLng: -0.1276, endLat: 3.139, endLng: 101.6869, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 2, startLat: -15.785493, startLng: -47.909029, endLat: 36.162809, endLng: -115.119411, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 3, startLat: -33.8688, startLng: 151.2093, endLat: 22.3193, endLng: 114.1694, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 3, startLat: 21.3099, startLng: -157.8581, endLat: 40.7128, endLng: -74.006, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 3, startLat: -6.2088, startLng: 106.8456, endLat: 51.5072, endLng: -0.1276, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 4, startLat: 11.986597, startLng: 8.571831, endLat: -15.595412, endLng: -56.05918, arcAlt: 0.5, color: '#1c1a15' },
+  { order: 4, startLat: -34.6037, startLng: -58.3816, endLat: 22.3193, endLng: 114.1694, arcAlt: 0.7, color: '#1c1a15' },
+  { order: 4, startLat: 51.5072, startLng: -0.1276, endLat: 48.8566, endLng: -2.3522, arcAlt: 0.1, color: '#1c1a15' },
+  { order: 5, startLat: 14.5995, startLng: 120.9842, endLat: 51.5072, endLng: -0.1276, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 5, startLat: 1.3521, startLng: 103.8198, endLat: -33.8688, endLng: 151.2093, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 5, startLat: 34.0522, startLng: -118.2437, endLat: 48.8566, endLng: -2.3522, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 6, startLat: -15.432563, startLng: 28.315853, endLat: 1.094136, endLng: -63.34546, arcAlt: 0.7, color: '#1c1a15' },
+  { order: 6, startLat: 37.5665, startLng: 126.978, endLat: 35.6762, endLng: 139.6503, arcAlt: 0.1, color: '#1c1a15' },
+  { order: 6, startLat: 22.3193, startLng: 114.1694, endLat: 51.5072, endLng: -0.1276, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 7, startLat: -19.885592, startLng: -43.951191, endLat: -15.595412, endLng: -56.05918, arcAlt: 0.1, color: '#1c1a15' },
+  { order: 7, startLat: 48.8566, startLng: -2.3522, endLat: 52.52, endLng: 13.405, arcAlt: 0.1, color: '#1c1a15' },
+  { order: 7, startLat: 52.52, startLng: 13.405, endLat: 34.0522, endLng: -118.2437, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 8, startLat: -8.833221, startLng: 13.264837, endLat: -33.936138, endLng: 18.436529, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 8, startLat: 49.2827, startLng: -123.1207, endLat: 52.3676, endLng: 4.9041, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 8, startLat: 1.3521, startLng: 103.8198, endLat: 40.7128, endLng: -74.006, arcAlt: 0.5, color: '#1c1a15' },
+  { order: 9, startLat: 51.5072, startLng: -0.1276, endLat: 34.0522, endLng: -118.2437, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 9, startLat: 22.3193, startLng: 114.1694, endLat: -22.9068, endLng: -43.1729, arcAlt: 0.7, color: '#1c1a15' },
+  { order: 9, startLat: 1.3521, startLng: 103.8198, endLat: -34.6037, endLng: -58.3816, arcAlt: 0.5, color: '#1c1a15' },
+  { order: 10, startLat: -22.9068, startLng: -43.1729, endLat: 28.6139, endLng: 77.209, arcAlt: 0.7, color: '#1c1a15' },
+  { order: 10, startLat: 34.0522, startLng: -118.2437, endLat: 31.2304, endLng: 121.4737, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 10, startLat: -6.2088, startLng: 106.8456, endLat: 52.3676, endLng: 4.9041, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 11, startLat: 41.9028, startLng: 12.4964, endLat: 34.0522, endLng: -118.2437, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 11, startLat: -6.2088, startLng: 106.8456, endLat: 31.2304, endLng: 121.4737, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 11, startLat: 22.3193, startLng: 114.1694, endLat: 1.3521, endLng: 103.8198, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 12, startLat: 34.0522, startLng: -118.2437, endLat: 37.7749, endLng: -122.4194, arcAlt: 0.1, color: '#1c1a15' },
+  { order: 12, startLat: 35.6762, startLng: 139.6503, endLat: 22.3193, endLng: 114.1694, arcAlt: 0.2, color: '#1c1a15' },
+  { order: 12, startLat: 22.3193, startLng: 114.1694, endLat: 34.0522, endLng: -118.2437, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 13, startLat: 52.52, startLng: 13.405, endLat: 22.3193, endLng: 114.1694, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 13, startLat: 11.986597, startLng: 8.571831, endLat: 35.6762, endLng: 139.6503, arcAlt: 0.3, color: '#1c1a15' },
+  { order: 13, startLat: -22.9068, startLng: -43.1729, endLat: -34.6037, endLng: -58.3816, arcAlt: 0.1, color: '#1c1a15' },
+  { order: 14, startLat: -33.936138, startLng: 18.436529, endLat: 21.395643, endLng: 39.883798, arcAlt: 0.3, color: '#1c1a15' },
 ];
 
 export function GlobeVisual() {
   return (
-    <div style={{ width: '100%', maxWidth: 320, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-      <div style={{ width: '100%', height: 280, position: 'relative', overflow: 'hidden' }}>
+    <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[480px]">
+      <div className="relative w-full h-[36rem] overflow-hidden rounded-[2rem] bg-transparent">
         <World data={sampleArcs} globeConfig={globeConfig} />
-        {/* bottom fade to match section background */}
-        <div style={{
-          position:   'absolute',
-          bottom:      0,
-          left:        0,
-          right:       0,
-          height:      60,
-          background:  'linear-gradient(to bottom, transparent, #dddbd3)',
-          pointerEvents: 'none',
-        }} />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[#dddbd3]" />
       </div>
-      <p style={{
-        fontFamily:    "'Inter', sans-serif",
-        fontSize:      '0.65rem',
-        letterSpacing: '0.08em',
-        textTransform: 'uppercase',
-        color:         'rgba(28,26,21,0.4)',
-        textAlign:     'center',
-      }}>
+      <p className="text-[0.66rem] uppercase tracking-[0.08em] text-center text-slate-500">
         Students learning smarter, everywhere
       </p>
     </div>
