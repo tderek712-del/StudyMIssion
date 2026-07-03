@@ -23,14 +23,14 @@ export function ArticleView({ id }: { id: number | null }) {
 
       <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
-          <h1 style={{ margin: 0, fontSize: 28, textAlign: 'center', flex: 1 }}>{article.title}</h1>
+          <h1 style={{ margin: 0, fontSize: 28, textAlign: 'left', flex: 1 }}>{article.title}</h1>
         </div>
-        <div style={{ color: '#4b4a45', lineHeight: 1.75, textAlign: 'center' }}>
+        <div style={{ color: '#4b4a45', lineHeight: 1.45, textAlign: 'left' }}>
           {article.content.map((block, idx) => {
-            if (block.type === 'heading') return <h2 key={idx} style={{ marginTop: 22, textAlign: 'center' }}>{block.text}</h2>;
-            if (block.type === 'image') return <img key={idx} src={(block as any).src} alt={(block as any).alt || ''} style={{ width: '100%', borderRadius: 8, margin: '18px 0' }} />;
-            if (block.type === 'quote') return <blockquote key={idx} style={{ margin: '18px 0', paddingLeft: 14, borderLeft: '4px solid #c8b18f', textAlign: 'center' }}>{block.text}</blockquote>;
-            return <p key={idx} style={{ margin: '12px 0' }}>{block.text}</p>;
+            if (block.type === 'heading') return <h2 key={idx} style={{ marginTop: 20, textAlign: 'left' }}>{block.text}</h2>;
+            if (block.type === 'image') return <img key={idx} src={(block as any).src} alt={(block as any).alt || ''} style={{ width: '100%', borderRadius: 8, margin: '16px 0' }} />;
+            if (block.type === 'quote') return <blockquote key={idx} style={{ margin: '16px 0', paddingLeft: 14, borderLeft: '4px solid #c8b18f', textAlign: 'left' }}>{block.text}</blockquote>;
+            return <p key={idx} style={{ margin: '10px 0' }}>{block.text}</p>;
           })}
         </div>
       </div>

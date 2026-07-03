@@ -4,6 +4,7 @@ import { ArticlesPage } from './components/ArticlesPage';
 import { ArticleView } from './components/ArticleView';
 import { ResearchSection } from './components/ResearchSection';
 import { FaqSection } from './components/FaqSection';
+import { RecentArticlesPreview } from './components/RecentArticlesPreview';
 import { CtaSection } from './components/CtaSection';
 import { SiteFooter } from './components/SiteFooter';
 import { Navigation } from './components/Navigation';
@@ -112,6 +113,7 @@ export default function App() {
           <HeroSection />
           <ResearchSection />
           <StickyFeatureSection steps={STICKY_STEPS} />
+          <RecentArticlesPreview />
           <FaqSection />
           <CtaSection />
           <SiteFooter />

@@ -30,9 +30,10 @@ export function ArticlesPage() {
         <div style={{ marginTop: 24 }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: 20,
-            alignItems: 'start',
+            alignItems: 'stretch',
+            overflow: 'hidden'
           }}>
             {articles.map((article) => (
               <a
@@ -43,26 +44,35 @@ export function ArticlesPage() {
                   window.dispatchEvent(new CustomEvent('route-change', { detail: `/articles/${article.id}` }));
                 }}
                 style={{
-                  background: '#f6f0e4',
+                  background: '#e9e4dd',
                   borderRadius: 10,
-                  padding: 20,
+                  padding: 0,
                   boxShadow: '0 12px 30px rgba(0,0,0,0.08)',
                   display: 'flex',
                   flexDirection: 'column',
-                  minHeight: 200,
+                  flex: '1 1 0%',
                   cursor: 'pointer',
                   textDecoration: 'none',
                   color: 'inherit',
+                  overflow: 'hidden',
                 }}
               >
-                <div style={{ height: 100, borderRadius: 8, background: 'linear-gradient(135deg, #f1eadf, #fbf7f1)', marginBottom: 12 }} />
-                <h3 style={{ margin: 0, marginBottom: 8, fontSize: 18, color: '#1c1a15', textAlign: 'center' }}>
-                  {article.title}
-                </h3>
-                <p style={{ margin: 0, marginBottom: 12, color: '#4b4a45', textAlign: 'center' }}>
-                  {article.excerpt}
-                </p>
-                <div style={{ marginTop: 'auto', color: '#8a7a52', fontSize: 13 }}></div>
+                <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', flexShrink: 0 }}>
+                  <img src={article.cardImage || article.icon} alt="article image" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </div>
+
+                <div style={{ padding: 18, display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
+                  <h3 style={{ margin: 0, fontSize: 18, color: '#1c1a15', textAlign: 'left' }}>{article.title}</h3>
+                  <p style={{ margin: 0, color: '#4b4a45', lineHeight: 1.5 }}>{article.excerpt}</p>
+
+                  <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(28,26,21,0.06)', paddingTop: 12, color: '#6b6557', fontSize: 13, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+                    <div>{article.author}</div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ color: '#6b6557' }}>{article.readTime}</div>
+                      <div style={{ color: '#9a9282', marginTop: 4 }}>{article.date}</div>
+                    </div>
+                  </div>
+                </div>
               </a>
             ))}
           </div>

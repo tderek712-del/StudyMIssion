@@ -2,6 +2,11 @@ export const articles = [
   {
     id: 1,
     title: 'Cognitive Load: The Hidden Study Advantage',
+    author: 'Derek Turso',
+    readTime: '3 min read',
+    date: 'June 25, 2025',
+    icon: '/images/article-icons/icon1.svg',
+    cardImage: '/images/articleicons/images (2).jpg',
     excerpt: 'A practical guide to why thinking harder while studying builds stronger memory and better grades.',
     content: [
       { type: 'paragraph', text: 'Imagine you are a student in school that aims to get the grades they’ve always deserved. Putting in hours on hours in hopes that you perform well on your tests.' },
@@ -47,6 +52,11 @@ export const articles = [
   {
     id: 2,
     title: 'Spaced Repetition: Stop Cramming, Start Spacing',
+    author: 'Derek Turso',
+    readTime: '2 min read',
+    date: 'July 7, 2025',
+    icon: '/images/article-icons/icon2.svg',
+    cardImage: '/images/articleicons/timeline-symbol-icon-shadow-timeline-symbol-icon-shadow-simple-vector-logo-435329456.webp',
     excerpt: 'Why spacing out review beats marathon cramming sessions and how to implement it.',
     content: [
       { type: 'paragraph', text: 'Day in and day out, our brains slowly forget everything they’ve ever learned. The information we cherish dearly slips away from our fingertips, to never be seen again.' },
@@ -75,6 +85,11 @@ export const articles = [
   {
     id: 3,
     title: 'The Psychological Trick That Separates Top Students',
+    author: 'Derek Turso',
+    readTime: '1 min read',
+    date: 'September 21, 2025',
+    icon: '/images/article-icons/icon3.svg',
+    cardImage: '/images/articleicons/images.png',
     excerpt: 'How much effort do you really have to put in to get what you want?',
     content: [
       { type: 'paragraph', text: 'You know that feeling.' },
