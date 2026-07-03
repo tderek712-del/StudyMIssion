@@ -41,7 +41,7 @@ export function CtaSection() {
       </p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         <button
-          onClick={() => window.dispatchEvent(new Event('open-articles'))}
+          onClick={() => window.dispatchEvent(new CustomEvent('route-change', { detail: '/articles' }))}
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: '0.875rem',

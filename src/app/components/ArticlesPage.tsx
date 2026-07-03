@@ -35,9 +35,13 @@ export function ArticlesPage() {
             alignItems: 'start',
           }}>
             {articles.map((article) => (
-              <article
+              <a
                 key={article.id}
-                onClick={() => window.dispatchEvent(new CustomEvent('open-article', { detail: article.id }))}
+                href={`/articles/${article.id}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  window.dispatchEvent(new CustomEvent('route-change', { detail: `/articles/${article.id}` }));
+                }}
                 style={{
                   background: '#f6f0e4',
                   borderRadius: 10,
@@ -47,6 +51,8 @@ export function ArticlesPage() {
                   flexDirection: 'column',
                   minHeight: 200,
                   cursor: 'pointer',
+                  textDecoration: 'none',
+                  color: 'inherit',
                 }}
               >
                 <div style={{ height: 100, borderRadius: 8, background: 'linear-gradient(135deg, #f1eadf, #fbf7f1)', marginBottom: 12 }} />
@@ -57,7 +63,7 @@ export function ArticlesPage() {
                   {article.excerpt}
                 </p>
                 <div style={{ marginTop: 'auto', color: '#8a7a52', fontSize: 13 }}>[Click to read]</div>
-              </article>
+              </a>
             ))}
           </div>
         </div>
