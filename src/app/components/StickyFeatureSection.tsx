@@ -66,7 +66,6 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
   const outerRef = useRef<HTMLDivElement>(null);
   const [active,  setActive]  = useState(0);
   const [stepKey, setStepKey] = useState(0);
-  const [compactSticky, setCompactSticky] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -86,35 +85,6 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
     update();
     return () => window.removeEventListener('scroll', update);
   }, [steps.length]);
-
-  // Detect when the active text + visual will overflow the viewport
-  useEffect(() => {
-    const measure = () => {
-      const root = outerRef.current;
-      if (!root) return;
-      const activeText = root.querySelector<HTMLDivElement>(`.text-step[data-step="${active}"]`);
-      const activeVisual = root.querySelector<HTMLDivElement>(`.visual-step[data-step="${active}"]`);
-
-      // Only apply compact behavior on narrow viewports (mobile)
-      const isMobile = window.innerWidth <= 900;
-      if (!isMobile) {
-        setCompactSticky(false);
-        return;
-      }
-
-      const textH = activeText ? activeText.getBoundingClientRect().height : 0;
-      const visualH = activeVisual ? activeVisual.getBoundingClientRect().height : 0;
-      const available = window.innerHeight - 48; // allow some breathing room
-
-      // If combined heights exceed available space, enable compact mode
-      setCompactSticky(textH + visualH + 24 > available);
-    };
-
-    measure();
-    window.addEventListener('resize', measure);
-    // also measure when active changes
-    return () => window.removeEventListener('resize', measure);
-  }, [active]);
 
   return (
     // Tall outer div — provides the scroll range for all screen sizes
@@ -141,8 +111,6 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
           {steps.map((step, i) => (
             <div
               key={i}
-              data-step={i}
-              className={`text-step ${compactSticky ? 'compact' : ''} md:!p-0 md:!pl-[5rem] md:!pr-[3rem] md:flex md:flex-col md:justify-center`}
               style={{
                 position:      'absolute',
                 inset:         0,
@@ -153,18 +121,19 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
                 maxWidth:      '100%',
                 boxSizing:     'border-box',
                 // Keep top content visible on mobile, center on desktop.
-                padding:       compactSticky ? '0.9rem' : '1.25rem',
-                paddingTop:    compactSticky ? '1.25rem' : '2rem',
-                paddingBottom: compactSticky ? '1.25rem' : '2rem',
+                padding:       '1.25rem',
+                paddingTop:    '2rem',
+                paddingBottom: '2rem',
                 opacity:       active === i ? 1 : 0,
                 transform:     `translateY(${active === i ? 0 : active < i ? '22px' : '-22px'})`,
                 transition:    'opacity 0.55s ease, transform 0.55s ease',
                 pointerEvents: active === i ? 'auto' : 'none',
               }}
+              className="md:!p-0 md:!pl-[5rem] md:!pr-[3rem] md:flex md:flex-col md:justify-center"
             >
               <p style={tagStyle}>{step.tag}</p>
-              <h2 style={{ ...headingStyle, fontSize: compactSticky ? 'clamp(1.25rem, 2.2vw, 1.6rem)' : headingStyle.fontSize }}>{step.heading}</h2>
-              <p style={{ ...bodyStyle, maxWidth: '100%', fontSize: compactSticky ? 'clamp(0.95rem, 1.2vw, 1rem)' : bodyStyle.fontSize }}>{step.body}</p>
+              <h2 style={headingStyle}>{step.heading}</h2>
+              <p style={{ ...bodyStyle, maxWidth: '100%' }}>{step.body}</p>
             </div>
           ))}
 
@@ -180,7 +149,6 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
             flex:      1,
             minHeight: 0,
           }}
-          data-visual-wrapper
         >
           {steps.map((step, i) => (
             <div
@@ -190,21 +158,19 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
                 inset:          0,
                 overflow:       'hidden',
                 display:        'flex',
-                alignItems:     compactSticky ? 'flex-end' : 'center',
-                justifyContent: compactSticky ? 'flex-end' : 'center',
-                padding:        compactSticky ? '0.9rem' : '1.5rem',
+                alignItems:     'center',
+                justifyContent: 'center',
+                padding:        '1.5rem',
                 opacity:        active === i ? 1 : 0,
-                transform:      `scale(${active === i ? (compactSticky ? 0.86 : 1) : 0.95})`,
+                transform:      `scale(${active === i ? 1 : 0.95})`,
                 transition:     'opacity 0.5s ease, transform 0.5s ease',
                 pointerEvents:  active === i ? 'auto' : 'none',
               }}
-              data-step={i}
-              className={`visual-step ${compactSticky ? 'compact' : ''}`}
             >
               {/* stepKey remounts so entry animations replay each step change */}
               <div
                 key={active === i ? stepKey : i}
-                style={{ maxWidth: '100%', maxHeight: compactSticky ? '40vh' : '100%', overflow: 'hidden' }}
+                style={{ maxWidth: '100%', maxHeight: '100%', overflow: 'hidden' }}
               >
                 {step.visual}
               </div>
