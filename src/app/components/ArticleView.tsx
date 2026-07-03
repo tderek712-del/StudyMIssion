@@ -10,7 +10,6 @@ export function ArticleView({ id }: { id: number | null }) {
       <section style={{ padding: 40 }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <p>Article not found.</p>
-          <button onClick={() => window.dispatchEvent(new Event('open-home'))} style={{ marginTop: 12 }}>Back</button>
         </div>
       </section>
     );
@@ -25,7 +24,6 @@ export function ArticleView({ id }: { id: number | null }) {
       <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
           <h1 style={{ margin: 0, fontSize: 28, textAlign: 'center', flex: 1 }}>{article.title}</h1>
-          <button onClick={() => window.dispatchEvent(new Event('open-home'))} style={{ background: '#1c1a15', color: '#fff', border: 'none', padding: '8px 12px', borderRadius: 6, cursor: 'pointer' }}>Back</button>
         </div>
         <div style={{ color: '#4b4a45', lineHeight: 1.75, textAlign: 'center' }}>
           {article.content.map((block, idx) => {
