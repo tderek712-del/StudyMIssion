@@ -74,8 +74,8 @@ export const articles = [
   },
   {
     id: 3,
-    title: 'The Study Habit that Separates Top Students',
-    excerpt: 'What consistent questioning, testing, and refining your study process can do for your grades.',
+    title: 'The Psychological Trick That Separates Top Students',
+    excerpt: 'How much effort do you really have to put in to get what you want?',
     content: [
       { type: 'paragraph', text: 'You know that feeling.' },
       { type: 'paragraph', text: 'The daunting power of the tasks ahead. Bearing down on you, pressuring you constantly. You think: I can’t possibly make a dent in this.' },

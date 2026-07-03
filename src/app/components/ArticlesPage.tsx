@@ -62,7 +62,7 @@ export function ArticlesPage() {
                 <p style={{ margin: 0, marginBottom: 12, color: '#4b4a45', textAlign: 'center' }}>
                   {article.excerpt}
                 </p>
-                <div style={{ marginTop: 'auto', color: '#8a7a52', fontSize: 13 }}>[Click to read]</div>
+                <div style={{ marginTop: 'auto', color: '#8a7a52', fontSize: 13 }}></div>
               </a>
             ))}
           </div>
