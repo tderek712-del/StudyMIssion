@@ -258,84 +258,92 @@ export function ComplexityChart() {
               })()}
 
           {/* knowledge gap label (centered on the vertical line) */}
-          <div
-            id="cs-kg-label"
-            style={{
-              position: 'absolute',
-              // anchor right edge a few pixels left of the vertical line so label sits to the left
-              right: Math.max(8, coords.width - coords.x + 12),
-              top: (coords.yExpo + coords.yLinear) / 2 - 10,
-              transform: reveal ? 'translateY(-50%) scale(1)' : 'translateY(-50%) scale(0.94)',
-              transformOrigin: 'right center',
-              background: 'rgba(28,26,21,0.92)',
-              color: '#fff',
-              padding: '6px 8px',
-              borderRadius: 6,
-              fontSize: 12,
-              opacity: reveal ? 1 : 0,
-              transition: 'opacity 620ms ease 120ms, transform 420ms cubic-bezier(.2,.9,.2,1)',
-              pointerEvents: 'none',
-              maxWidth: 160,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            Knowledge Gap
-          </div>
+          {(() => {
+            const compact = coords.width < 360;
+            const gapLabel = compact ? 'Gap' : 'Knowledge Gap';
+            const topLabel = compact ? 'With TSM' : 'Knowledge with The Study Mission';
+            const bottomLabel = compact ? 'Without TSM' : 'What School Provides (No Strategies Taught)';
+            const topMax = compact ? 120 : Math.max(100, coords.width * 0.4);
+            const bottomMax = compact ? 140 : Math.max(120, coords.width * 0.45);
 
-          {/* top-right pill above last expo point */}
-          <div
-            id="cs-with-label"
-            style={{
-              position: 'absolute',
-              // anchor right to the vertical line so the pill expands leftward
-              right: Math.max(8, coords.width - coords.x + 8),
-              top: coords.yExpo - 28,
-              background: '#1c1a15',
-              color: '#fff',
-              padding: '6px 10px',
-              borderRadius: 999,
-              fontSize: 12,
-              opacity: reveal ? 1 : 0,
-              transition: 'opacity 720ms cubic-bezier(.2,.9,.2,1) 160ms, transform 420ms cubic-bezier(.2,.9,.2,1)',
-              transform: reveal ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.96)',
-              pointerEvents: 'none',
-              maxWidth: coords.width ? Math.max(100, coords.width * 0.4) : 160,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            Knowledge with The Study Mission
-          </div>
+            return (
+              <>
+                <div
+                  id="cs-kg-label"
+                  style={{
+                    position: 'absolute',
+                    right: Math.max(8, coords.width - coords.x + 12),
+                    top: (coords.yExpo + coords.yLinear) / 2 - 10,
+                    transform: reveal ? 'translateY(-50%) scale(1)' : 'translateY(-50%) scale(0.94)',
+                    transformOrigin: 'right center',
+                    background: 'rgba(28,26,21,0.92)',
+                    color: '#fff',
+                    padding: '6px 8px',
+                    borderRadius: 6,
+                    fontSize: 12,
+                    opacity: reveal ? 1 : 0,
+                    transition: 'opacity 620ms ease 120ms, transform 420ms cubic-bezier(.2,.9,.2,1)',
+                    pointerEvents: 'none',
+                    maxWidth: 160,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {gapLabel}
+                </div>
 
-          {/* bottom label under last linear point */}
-          <div
-            id="cs-without-label"
-            style={{
-              position: 'absolute',
-              // anchor right to the vertical line so the box expands leftward
-              right: Math.max(8, coords.width - coords.x + 8),
-              top: coords.yLinear + 8,
-              background: '#fff',
-              color: '#1c1a15',
-              padding: '8px 10px',
-              borderRadius: 6,
-              fontSize: 13,
-              boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
-              opacity: reveal ? 1 : 0,
-              transition: 'opacity 720ms cubic-bezier(.2,.9,.2,1) 180ms, transform 420ms cubic-bezier(.2,.9,.2,1)',
-              transform: reveal ? 'translateY(0) scale(1)' : 'translateY(8px) scale(0.98)',
-              pointerEvents: 'none',
-              maxWidth: coords.width ? Math.max(120, coords.width * 0.45) : 220,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            What School Provides (No Strategies Taught)
-          </div>
+                <div
+                  id="cs-with-label"
+                  style={{
+                    position: 'absolute',
+                    right: Math.max(8, coords.width - coords.x + 8),
+                    top: coords.yExpo - 28,
+                    background: '#1c1a15',
+                    color: '#fff',
+                    padding: '6px 10px',
+                    borderRadius: 999,
+                    fontSize: 12,
+                    opacity: reveal ? 1 : 0,
+                    transition: 'opacity 720ms cubic-bezier(.2,.9,.2,1) 160ms, transform 420ms cubic-bezier(.2,.9,.2,1)',
+                    transform: reveal ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.96)',
+                    pointerEvents: 'none',
+                    maxWidth: topMax,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {topLabel}
+                </div>
+
+                <div
+                  id="cs-without-label"
+                  style={{
+                    position: 'absolute',
+                    right: Math.max(8, coords.width - coords.x + 8),
+                    top: coords.yLinear + 8,
+                    background: '#fff',
+                    color: '#1c1a15',
+                    padding: '8px 10px',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
+                    opacity: reveal ? 1 : 0,
+                    transition: 'opacity 720ms cubic-bezier(.2,.9,.2,1) 180ms, transform 420ms cubic-bezier(.2,.9,.2,1)',
+                    transform: reveal ? 'translateY(0) scale(1)' : 'translateY(8px) scale(0.98)',
+                    pointerEvents: 'none',
+                    maxWidth: bottomMax,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {bottomLabel}
+                </div>
+              </>
+            );
+          })()}
         </>
       )}
     </div>

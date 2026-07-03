@@ -74,7 +74,7 @@ const sampleArcs: Position[] = [
 export function GlobeVisual() {
   return (
     <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[480px]">
-      <div className="relative w-full h-[24rem] sm:h-[28rem] md:h-[36rem] overflow-hidden rounded-[2rem] bg-transparent">
+      <div className="relative w-full h-[20rem] sm:h-[24rem] md:h-[34rem] overflow-hidden rounded-[2rem] bg-transparent">
         <World data={sampleArcs} globeConfig={globeConfig} />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[#dddbd3]" />
       </div>

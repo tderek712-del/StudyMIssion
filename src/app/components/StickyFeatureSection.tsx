@@ -105,7 +105,7 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
       >
         {/* ── Left / top: text ─────────────────────────────────────────────── */}
         <div
-          className="w-full md:w-[46%] md:flex-none"
+          className="w-full md:w-[46%] md:flex-none min-h-[42vh] md:min-h-0"
           style={{ position: 'relative', flexShrink: 0 }}
         >
           {steps.map((step, i) => (
@@ -121,9 +121,9 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
                 maxWidth:      '100%',
                 boxSizing:     'border-box',
                 // Keep top content visible on mobile, center on desktop.
-                padding:       '1.5rem',
-                paddingTop:    '3rem',
-                paddingBottom: '3rem',
+                padding:       '1.25rem',
+                paddingTop:    '2rem',
+                paddingBottom: '2rem',
                 opacity:       active === i ? 1 : 0,
                 transform:     `translateY(${active === i ? 0 : active < i ? '22px' : '-22px'})`,
                 transition:    'opacity 0.55s ease, transform 0.55s ease',
@@ -137,29 +137,6 @@ export function StickyFeatureSection({ steps }: { steps: StickyStep[] }) {
             </div>
           ))}
 
-          {/* Progress indicator */}
-          <div
-            style={{
-              position:  'absolute',
-              display:   'flex',
-              gap:       8,
-              alignItems:'center',
-            }}
-            className="bottom-6 left-6 md:bottom-12 md:left-[5rem]"
-          >
-            {steps.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  height:          6,
-                  width:           active === i ? 22 : 6,
-                  borderRadius:    9999,
-                  backgroundColor: active === i ? '#1c1a15' : 'rgba(28,26,21,0.2)',
-                  transition:      'width 0.4s ease, background-color 0.4s ease',
-                }}
-              />
-            ))}
-          </div>
         </div>
 
         {/* ── Right / bottom: visual ────────────────────────────────────────── */}
