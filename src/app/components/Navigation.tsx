@@ -50,10 +50,10 @@ export function Navigation() {
 
         {!isCompact && (
           <a
-            href="#"
+            href="/"
             onClick={(e) => {
               e.preventDefault();
-              window.dispatchEvent(new Event('open-home'));
+              window.dispatchEvent(new CustomEvent('route-change', { detail: '/' }));
             }}
             style={{
               fontFamily: "'Inter', sans-serif",
@@ -124,10 +124,10 @@ export function Navigation() {
 
         {!isCompact && (
           <a
-            href="#"
+            href="/articles"
             onClick={(e) => {
               e.preventDefault();
-              window.dispatchEvent(new Event('open-articles'));
+              window.dispatchEvent(new CustomEvent('route-change', { detail: '/articles' }));
             }}
             style={{
               fontFamily: "'Inter', sans-serif",
@@ -161,7 +161,7 @@ export function Navigation() {
         >
           <button
             onClick={() => {
-              window.dispatchEvent(new Event('open-home'));
+              window.dispatchEvent(new CustomEvent('route-change', { detail: '/' }));
               setMenuOpen(false);
             }}
             style={{
@@ -180,7 +180,7 @@ export function Navigation() {
           </button>
           <button
             onClick={() => {
-              window.dispatchEvent(new Event('open-articles'));
+              window.dispatchEvent(new CustomEvent('route-change', { detail: '/articles' }));
               setMenuOpen(false);
             }}
             style={{
